@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <h1>Вход</h1>
+    <p class="lead">Используйте учётные данные сотрудника, чтобы просматривать внутренние разделы.</p>
+</section>
+<form class="panel narrow" method="post" action="{{ url_for('login', next=next_url) }}">
+    <label>Email
+        <input type="email" name="email" required>
+    </label>
+    <label>Пароль
+        <input type="password" name="password" required>
+    </label>
+    <button class="primary" type="submit">Войти</button>
+</form>
+<div class="panel narrow">
+    <h2>Роли и права</h2>
+    <ul>
+        <li><strong>admin@citygreenhub.example</strong> / <code>adminpass</code> — полный доступ, удаление.</li>
+        <li><strong>editor@citygreenhub.example</strong> / <code>editorpass</code> — создание и редактирование новостей, просмотр сообщений.</li>
+        <li><strong>member</strong> — создаётся через регистрацию и имеет только общий доступ.</li>
+    </ul>
+    <p>Нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрируйтесь</a>.</p>
+</div>
+{% endblock %}

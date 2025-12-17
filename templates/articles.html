@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <h1>Статьи</h1>
+    <p class="lead">Аналитика и методические материалы по зелёной инфраструктуре.</p>
+</section>
+{% for group, items in sections.items() %}
+<section class="panel">
+    <h2>{{ group }}</h2>
+    <div class="card-list three">
+        {% for article in items %}
+            <article class="card">
+                <h3><a href="{{ url_for('article_detail', slug=article.slug) }}">{{ article.title }}</a></h3>
+                <p>{{ article.excerpt }}</p>
+                <a class="secondary" href="{{ url_for('article_detail', slug=article.slug) }}">Читать</a>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endfor %}
+{% endblock %}

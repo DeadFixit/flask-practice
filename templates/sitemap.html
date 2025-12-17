@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <h1>Карта сайта</h1>
+    <p class="lead">Все основные страницы портала.</p>
+</section>
+<ul class="sitemap">
+    {% for label, link in pages %}
+        <li><a href="{{ link }}">{{ label }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

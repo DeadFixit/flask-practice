@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <p class="eyebrow">City Green Hub</p>
+        <h1>{{ banner.headline }}</h1>
+        <p class="lead">{{ banner.subtext }}</p>
+        <a class="primary" href="{{ url_for('services') }}">Посмотреть решения</a>
+    </div>
+    <div class="hero-card">
+        <h2>Почему это важно</h2>
+        <ul>
+            <li>Снижение перегрева городов и улучшение качества воздуха.</li>
+            <li>Сокращение нагрузки на ливневую инфраструктуру.</li>
+            <li>Вовлечение жителей в уход за зелёными объектами.</li>
+        </ul>
+    </div>
+</section>
+<section class="grid two">
+    <div>
+        <h2>Свежие статьи</h2>
+        <div class="card-list">
+            {% for group, items in sections.items() %}
+                {% for article in items[:2] %}
+                    <article class="card">
+                        <h3><a href="{{ url_for('article_detail', slug=article.slug) }}">{{ article.title }}</a></h3>
+                        <p>{{ article.excerpt }}</p>
+                        <span class="pill">{{ group }}</span>
+                    </article>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <h2>Лента новостей</h2>
+        <ul class="news-list">
+            {% for item in news %}
+                <li>
+                    <div class="news-date">{{ item.date }}</div>
+                    <div class="news-title">{{ item.title }}</div>
+                    <div class="news-summary">{{ item.summary }}</div>
+                </li>
+            {% endfor %}
+        </ul>
+        <a class="secondary" href="{{ url_for('news_page') }}">Все новости</a>
+    </div>
+</section>
+<section class="cta">
+    <div>
+        <h2>Нужен план внедрения зелёной инфраструктуры?</h2>
+        <p>Соберём данные, подготовим техническое задание и подключим подрядчиков.</p>
+    </div>
+    <a class="primary" href="{{ url_for('contact') }}">Оставить заявку</a>
+</section>
+{% endblock %}

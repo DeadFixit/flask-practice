@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <h1>Практики внедрения</h1>
+    <p class="lead">Подборка реализованных подходов, которые можно адаптировать под конкретные кварталы.</p>
+</section>
+<div class="card-list two">
+    {% for practice in practices %}
+        <article class="card">
+            <h2>{{ practice.title }}</h2>
+            <p>{{ practice.excerpt }}</p>
+            <p class="small">{{ practice.content }}</p>
+        </article>
+    {% endfor %}
+</div>
+{% endblock %}

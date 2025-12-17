@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <h1>Страница не найдена</h1>
+    <p class="lead">Мы не смогли найти этот адрес. Проверьте ссылку или воспользуйтесь картой сайта.</p>
+    <a class="primary" href="{{ url_for('index') }}">На главную</a>
+    <a class="secondary" href="{{ url_for('sitemap') }}">Карта сайта</a>
+</section>
+{% endblock %}

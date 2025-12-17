@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <p class="eyebrow">Материал</p>
+    <h1>{{ article.title }}</h1>
+</section>
+<article class="rich-text">
+    <p>{{ article.content }}</p>
+</article>
+<a class="secondary" href="{{ url_for('articles') }}">← Ко всем статьям</a>
+{% endblock %}

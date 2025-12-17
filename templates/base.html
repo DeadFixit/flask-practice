@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ru" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ site_meta.title }} | {{ site_meta.tagline }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script defer src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</head>
+<body class="theme-standard">
+<header class="site-header">
+    <div class="brand">
+        <div class="brand-mark">CGH</div>
+        <div>
+            <div class="brand-title">{{ site_meta.title }}</div>
+            <div class="brand-tagline">{{ site_meta.tagline }}</div>
+        </div>
+    </div>
+    <nav class="main-nav">
+        {% for label, endpoint in nav_links %}
+            <a href="{{ url_for(endpoint) }}" class="nav-link{% if request.endpoint == endpoint %} active{% endif %}">{{ label }}</a>
+        {% endfor %}
+    </nav>
+    <div class="header-actions">
+        <form class="search-form" action="{{ url_for('search') }}" method="get">
+            <input type="search" name="q" placeholder="Поиск по сайту" value="{{ request.args.get('q', '') }}" aria-label="Поиск по сайту">
+            <button type="submit">Найти</button>
+        </form>
+        <button id="toggle-accessibility" class="secondary" aria-expanded="false" aria-controls="accessibility-panel">Версия для слабовидящих</button>
+        {% if current_user %}
+            {% if current_user.role in ['admin', 'editor'] %}
+                <a class="secondary" href="{{ url_for('manage_news') }}">Новости</a>
+                <a class="secondary" href="{{ url_for('view_messages') }}">Сообщения</a>
+            {% endif %}
+            <a class="secondary" href="{{ url_for('logout') }}">Выйти ({{ current_user.email }})</a>
+        {% else %}
+            <a class="secondary" href="{{ url_for('login') }}">Войти</a>
+            <a class="secondary" href="{{ url_for('register') }}">Регистрация</a>
+        {% endif %}
+    </div>
+</header>
+<div class="accessibility-panel" id="accessibility-panel" hidden>
+    <div class="toolbar">
+        <div class="toolbar-group" role="group" aria-label="Размер шрифта">
+            <span>Шрифт:</span>
+            <button type="button" class="secondary" data-font="-1">A-</button>
+            <button type="button" class="secondary" data-font="0">A</button>
+            <button type="button" class="secondary" data-font="1">A+</button>
+        </div>
+        <div class="toolbar-group" role="group" aria-label="Цветовая схема">
+            <span>Цвет:</span>
+            <button type="button" class="secondary" data-color="gost">Ж/Ч</button>
+            <button type="button" class="secondary" data-color="blue">С/Б</button>
+            <button type="button" class="secondary" data-color="sepia">Сепия</button>
+        </div>
+        <div class="toolbar-group" role="group" aria-label="Межстрочный интервал">
+            <span>Интервал:</span>
+            <button type="button" class="secondary" data-line="normal">1x</button>
+            <button type="button" class="secondary" data-line="wide">1.5x</button>
+            <button type="button" class="secondary" data-line="extra">2x</button>
+        </div>
+    </div>
+</div>
+<main class="content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-list">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</main>
+<footer class="site-footer">
+    <div>
+        <strong>Контакты:</strong> {{ site_meta.contact_email }} | {{ site_meta.contact_phone }}
+    </div>
+    <div>
+        {{ site_meta.address }} | Поддержка: {{ site_meta.support_hours }}
+    </div>
+    <div>
+        <a href="{{ url_for('sitemap') }}">Карта сайта</a> · <a href="{{ url_for('contact') }}">Написать нам</a>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <h1>Новости</h1>
+    <p class="lead">События и обновления City Green Hub.</p>
+    {% if current_user and current_user.role in ['admin', 'editor'] %}
+        <div class="actions">
+            <a class="primary" href="{{ url_for('manage_news') }}">Добавить или редактировать новости</a>
+            <p class="small">Редактировать может автор или администратор, удалять — только администратор.</p>
+        </div>
+    {% endif %}
+</section>
+<ul class="news-list full">
+    {% for item in news %}
+        <li class="news-item">
+            <div class="news-date">{{ item.date }}</div>
+            <div class="news-title">{{ item.title }}</div>
+            <div class="news-summary">{{ item.summary }}</div>
+            <div class="small">
+                Автор: {{ item.author }}
+                {% if current_user and current_user.role in ['admin', 'editor'] %}
+                    · <a href="{{ url_for('edit_news', news_id=item.id) }}">Редактировать</a>
+                    {% if current_user.role == 'admin' %}
+                        ·
+                        <form method="post" action="{{ url_for('delete_news', news_id=item.id) }}" style="display:inline" onsubmit="return confirm('Удалить новость?');">
+                            <button type="submit" class="secondary">Удалить</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
